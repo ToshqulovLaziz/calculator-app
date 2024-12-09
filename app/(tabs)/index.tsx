@@ -31,7 +31,15 @@ const Calculator: React.FC = () => {
       return;
     }
 
-    setDisplay((prev) => (prev === "0" ? value : prev + value));
+    if (value === ".") {
+      if (display.includes(".")) {
+        return; 
+      }
+    }
+
+    setDisplay((prev) =>
+      prev === "0" && value !== "." ? value : prev + value
+    );
   };
 
   return (
@@ -77,7 +85,9 @@ const Calculator: React.FC = () => {
               style={[
                 styles.button,
                 key === "0" ? styles.zeroButton : null,
-                !isNaN(Number(key)) && key !== "0" ? styles.numberButton : styles.operatorButton,
+                !isNaN(Number(key)) && key !== "0"
+                  ? styles.numberButton
+                  : styles.operatorButton,
                 key === "=" ? styles.equalsButton : null,
               ]}
               onPress={() => handlePress(key)}
@@ -102,7 +112,7 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: "#000",
   },
-  
+
   display: {
     width: "100%",
     height: 100,
@@ -156,7 +166,7 @@ const styles = StyleSheet.create({
   },
   acButton: {
     backgroundColor: "red",
-    width: "70%",
+    width: "20%",
     height: 70,
     justifyContent: "center",
     alignItems: "center",
